@@ -1,4 +1,5 @@
 ﻿using SocialMedia.Core.Entities;
+using SocialMedia.Core.Exeptions;
 using SocialMedia.Core.Interfaces;
 using System.Collections.Generic;
 using System.Threading.Tasks;
@@ -8,8 +9,10 @@ namespace SocialMedia.Core.Services
   public class PostService : IPostService
   {
     private readonly IRepository<Post> _postRepository;
-    public PostService(IRepository<Post> postrepository)
+    private readonly IRepository<User> _userRepository;
+    public PostService(IRepository<Post> postrepository, IRepository<User> userRepository)
     {
+      _userRepository = userRepository;
       _postRepository = postrepository;
     }
 
@@ -31,6 +34,11 @@ namespace SocialMedia.Core.Services
 
     public async Task InsertPost(Post post)
     {
+      var user = await _userRepository.GetById(post.UserId);
+      if( user == null)
+      {
+        throw new BusinessException("User doesn't exist");
+      }
       await _postRepository.Add(post);
     }
 
