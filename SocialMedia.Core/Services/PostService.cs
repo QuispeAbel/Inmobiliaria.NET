@@ -8,44 +8,46 @@ namespace SocialMedia.Core.Services
 {
   public class PostService : IPostService
   {
-    private readonly IRepository<Post> _postRepository;
-    private readonly IRepository<User> _userRepository;
-    public PostService(IRepository<Post> postrepository, IRepository<User> userRepository)
+    private readonly IUnitOfWork _unitOfWork;
+    //private readonly IRepository<Post> _postRepository;
+    //private readonly IRepository<User> _userRepository;
+    public PostService( IUnitOfWork unitOfWork)
     {
-      _userRepository = userRepository;
-      _postRepository = postrepository;
+      _unitOfWork = unitOfWork;
     }
 
     public async Task<bool> DeletePost(int id)
     {
-      await _postRepository.Delete(id);
+      await _unitOfWork.PostRepository.Delete(id);
+      _unitOfWork.SaveChanges();
       return true;
     }
 
     public async Task<Post> GetPost(int id)
     {
-      return await _postRepository.GetById(id);
+      return await _unitOfWork.PostRepository.GetById(id);
     }
 
-    public async Task<IEnumerable<Post>> GetPosts()
+    public IEnumerable<Post> GetPosts()
     {
-      return await _postRepository.GetAll();
+      return _unitOfWork.PostRepository.GetAll();
     }
 
     public async Task InsertPost(Post post)
     {
-      var user = await _userRepository.GetById(post.UserId);
+      var user = await _unitOfWork.UserRepository.GetById(post.UserId);
       if( user == null)
       {
         throw new BusinessException("User doesn't exist");
       }
-      await _postRepository.Add(post);
+       _unitOfWork.PostRepository.Add(post);
+      await _unitOfWork.SaveChangesAsync();
     }
 
     public async Task<bool> UpdatePost(Post post)
     {
-      await _postRepository.Update(post);
-
+       _unitOfWork.PostRepository.Update(post);
+      await _unitOfWork.SaveChangesAsync();
       return true;
     }
   }
