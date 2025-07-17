@@ -256,9 +256,10 @@ CREATE TABLE [dbo].[propietario](
 ) ON [PRIMARY]
 GO
 -- Volcado
+SET IDENTITY INSERT [dbo].[persona] ON
 
-INSERT INTO persona (id, nombre, dni, email, celular, fecha_nac, username, cuil)
-VALUES (1, 'John Doe', 12345678, 'john.doe@example.com', 1234567890, '1980-01-01', 'johndoe', 20123456789),
+INSERT INTO [dbo].[persona] ([id], [nombre], [dni], [email], [celular], [fecha_nac], [username], [cuil])
+VALUES (1, N'John Doe', 12345678, N'john.doe@example.com', 1234567890, N'1980-01-01' As datetime, 'johndoe', 20123456789),
 (2, 'Jane Smith', 23456789, 'jane.smith@example.com', 2345678901, '1985-02-02', 'janesmith', 20234567890),
 (3, 'Alice Johnson', 34567890, 'alice.johnson@example.com', 3456789012, '1990-03-03', 'alicejohnson', 20345678901),
 (4, 'Bob Brown', 45678901, 'bob.brown@example.com', 4567890123, '1995-04-04', 'bobbrown', 20456789012),
@@ -284,9 +285,10 @@ VALUES (1, 'John Doe', 12345678, 'john.doe@example.com', 1234567890, '1980-01-01
 (24, 'Victor Evans', 67890125, 'victor.evans@example.com', 6789012347, '1995-12-24', 'victorevans', 20678901236),
 (25, 'Wendy Foster', 78901236, 'wendy.foster@example.com', 7890123458, '2000-01-25', 'wendyfoster', 20789012347);
 
-GO
+SET IDENTITY INSERT [dbo].[persona] OFF
+SET IDENTITY INSERT [dbo].[propiedad] ON
 
-INSERT INTO propiedad (idPropiedad, direccion, alquiler, m2_cubiertos, m2_descubiertos, condiciones_garantes, gastos, fecha_precio_minimo, ciudad, idPropietario, enVenta, enAlquiler, precio)
+INSERT INTO [dbo].[propiedad] ([idPropiedad], [direccion], [alquiler], [m2_cubiertos], [m2_descubiertos], [condiciones_garantes], [gastos], [fecha_precio_minimo], [ciudad], [idPropietario], [enVenta], [enAlquiler], [precio])
 VALUES (1, '123 Main St', 1200, 100, 50, 'Good credit', 200, 100, '2023-01-01', 'City A', 1, 1, 0, 80816516),
 (2, '456 Elm St', 1300, 110, 60, 'No pets', 210, 110, '2023-02-01', 'City B', 2, 1, 0, 155674),
 (3, '789 Oak St', 1400, 120, 70, 'Stable job', 220, 120, '2023-03-01', 'City C', 3, 0, 1, 277331),
@@ -337,9 +339,11 @@ VALUES (1, '123 Main St', 1200, 100, 50, 'Good credit', 200, 100, '2023-01-01', 
 (48, '4545 Hawthorn St', 5900, 570, 520, 'Stable job', 670, 570, '2026-12-01', 'City VV', 4, 0, 1, 18129846),
 (49, '4646 Juniper St', 6000, 580, 530, 'No smoking', 680, 580, '2027-01-01', 'City WW', 1, 0, 1, 93355346),
 (50, '4747 Laurel St', 6100, 590, 540, 'Good references', 690, 590, '2027-02-01', 'City XX', 2, 1, 0, 238006);
-GO
 
-INSERT INTO comercial (idComercial, permisos_municipales, banio, cocina, vidriera, deposito, idPropiedad)
+SET IDENTITY INSERT [dbo].[propiedad] OFF
+SET IDENTITY INSERT [dbo].[comercial] ON
+
+INSERT INTO [dbo].[comercial] ([idComercial], [permisos_municipales], [banio], [cocina], [vidriera], [deposito], [idPropiedad])
 VALUES (1, 'Permit A', 1, 1, 1, 1, 26),
        (2, 'Permit B', 0, 1, 0, 1, 27),
        (3, 'Permit C', 1, 0, 1, 0, 28),
@@ -365,9 +369,11 @@ VALUES (1, 'Permit A', 1, 1, 1, 1, 26),
        (23, 'Permit W', 0, 1, 0, 1, 48),
        (24, 'Permit X', 1, 0, 1, 1, 49),
        (25, 'Permit Y', 0, 1, 1, 0, 50);
-GO
 
-INSERT INTO estado (idEstado, estado)
+SET IDENTITY INSERT [dbo].[comercial] OFF
+SET IDENTITY INSERT [dbo].[estado] ON
+
+INSERT INTO [dbo].[estado] ([idEstado], [estado])
 VALUES (1, 'borrador'),
 (2, 'en revision'),
 (3, 'aprobado'),
@@ -378,9 +384,11 @@ VALUES (1, 'borrador'),
 (8, 'terminado'),
 (9, 'en proceso de renovacion'),
 (10, 'archivado');
-GO
 
-INSERT INTO familiar (idFamiliar, cant_ambientes, cant_banios, cant_autos_cochera, piscina, permite_mascotas, permite_ninios, idPropiedad)
+SET IDENTITY INSERT [dbo].[estado] OFF
+SET IDENTITY INSERT [dbo].[familiar] ON
+
+INSERT INTO [dbo].[familiar] ([idFamiliar], [cant_ambientes], [cant_banios], [cant_autos_cochera], [piscina], [permite_mascotas], [permite_ninios], [idPropiedad])
 VALUES (1, 3, 2, 1, 1, 1, 1, 1),
 (2, 4, 3, 2, 0, 0, 1, 2),
 (3, 2, 1, 1, 1, 1, 0, 3),
@@ -406,24 +414,30 @@ VALUES (1, 3, 2, 1, 1, 1, 1, 1),
 (23, 2, 1, 1, 1, 1, 0, 23),
 (24, 5, 4, 3, 0, 0, 1, 24),
 (25, 3, 2, 1, 1, 1, 0, 25);
-GO
 
-INSERT INTO garante (idGarante, ingresos, empresa_trabaja, contacto_trabaja, idPersona)
+SET IDENTITY INSERT [dbo].[familiar] OFF
+SET IDENTITY INSERT [dbo].[garante] ON
+
+INSERT INTO [dbo].[garante] ([idGarante], [ingresos], [empresa_trabaja], [contacto_trabaja], [idPersona])
 VALUES (1, 150000, 'Tecro', '5492302555398', 11),
 (2, 160000, 'Google', '(650) 253-0000', 12),
 (3, 170000, 'Microsoft', '+34 917 547 010', 13),
 (4, 180000, 'Amazon', 'contact4', 14),
 (5, 190000, 'Mercado Libre', '(54 11) 4640-8000', 15);
-GO
 
-INSERT INTO propietario (idPropietario, cbu, idPersona)
+SET IDENTITY INSERT [dbo].[garante] OFF
+SET IDENTITY INSERT [dbo].[propietario] ON
+
+INSERT INTO [dbo].[propietario] ([idPropietario], [cbu], [idPersona])
 VALUES (1, 1234567890123456, 16),
 (2, 2345678901234567, 17),
 (3, 3456789012345678, 18),
 (4, 4567890123456789, 19);
-GO
 
-INSERT INTO imagen_prop (idPropiedad, URL)
+SET IDENTITY INSERT [dbo].[propietario] OFF
+SET IDENTITY INSERT [dbo].[imagen_prop] ON
+
+INSERT INTO [dbo].[imagen_prop] ([idPropiedad], [URL])
 VALUES (1, 'https://images.unsplash.com/photo-1493809842364-78817add7ffb?q=80&w=1470&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D'),
 (2, 'https://images.unsplash.com/photo-1560185009-dddeb820c7b7?q=80&w=1470&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D'),
 (3, 'https://images.unsplash.com/photo-1560185007-c5ca9d2c014d?q=80&w=1470&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D'),
@@ -475,9 +489,10 @@ VALUES (1, 'https://images.unsplash.com/photo-1493809842364-78817add7ffb?q=80&w=
 (49, 'https://images.unsplash.com/photo-1560184897-0e5d96d86acd?q=80&w=1470&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D'),
 (50, 'https://images.unsplash.com/photo-1697462247996-51fdc8a1fe0a?q=80&w=1470&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D');
 
-GO
+SET IDENTITY INSERT [dbo].[imagen_prop] OFF
+SET IDENTITY INSERT [dbo].[inquilino] ON
 
-INSERT INTO inquilino (idInquilino, mascotas, empresa_trabaja, cantidad_integrantes, ingresos, idPersona)
+INSERT INTO [dbo].[inquilino] ([idInquilino], [mascotas], [empresa_trabaja], [cantidad_integrantes], [ingresos], [idPersona])
 VALUES (1, 1, 'Microsoft', '3', 50000, 1),
 (2, 0, 'Apple', '2', 60000, 2),
 (3, 1, 'Nvidia', '4', 70000, 3),
@@ -488,15 +503,19 @@ VALUES (1, 1, 'Microsoft', '3', 50000, 1),
 (8, 0, 'Tesla', '4', 120000, 8),
 (9, 1, 'Tecro', '1', 130000, 9),
 (10, 0, 'Oracle', '5', 140000, 10);
-GO
 
-INSERT INTO martillero (idMartillero, nro_matricula, idPersona)
+SET IDENTITY INSERT [dbo].[inquilino] OFF
+SET IDENTITY INSERT [dbo].[martillero] ON
+
+INSERT INTO [dbo].[martillero] ([idMartillero], [nro_matricula], [idPersona])
 VALUES (1, 1001, 20),
 (2, 1002, 21),
 (3, 1003, 22),
 (4, 1004, 23),
 (5, 1005, 24);
-GO
+
+SET IDENTITY INSERT [dbo].[martillero] OFF
+
 
 -- Índices para tablas volcadas
 --

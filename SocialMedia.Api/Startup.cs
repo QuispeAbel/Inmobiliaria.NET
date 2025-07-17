@@ -35,7 +35,10 @@ namespace SocialMedia.Api
     {
       services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
 
-      services.AddControllers().ConfigureApiBehaviorOptions(options =>
+      services.AddControllers( options =>
+      {
+        options.Filters.Add<GlobalExceptionFilter>();
+      }).ConfigureApiBehaviorOptions(options =>
       {
         //options.SuppressModelStateInvalidFilter = true;
       });
