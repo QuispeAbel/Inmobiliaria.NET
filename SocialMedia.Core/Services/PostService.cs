@@ -5,17 +5,23 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using System;
+using SocialMedia.Core.QueryFilters;
+using SocialMedia.Core.CustomEntities;
+using Microsoft.Extensions.Options;
 
 namespace SocialMedia.Core.Services
 {
   public class PostService : IPostService
   {
+    private readonly PaginationOptions _paginationOptions;
     private readonly IUnitOfWork _unitOfWork;
     //private readonly IRepository<Post> _postRepository;
     //private readonly IRepository<User> _userRepository;
-    public PostService( IUnitOfWork unitOfWork)
+
+    public PostService( IUnitOfWork unitOfWork, IOptions<PaginationOptions> options)
     {
       _unitOfWork = unitOfWork;
+      _paginationOptions = options.Value;
     }
 
     public async Task<bool> DeletePost(int id)
@@ -30,9 +36,33 @@ namespace SocialMedia.Core.Services
       return await _unitOfWork.PostRepository.GetById(id);
     }
 
-    public IEnumerable<Post> GetPosts()
+    public PagedList<Post> GetPosts(PostQueryFilter filters)
     {
-      return _unitOfWork.PostRepository.GetAll();
+      //uso de valores por defecto 
+      filters.PageNumber = filters.PageNumber == 0 ? _paginationOptions.DefaultPageNumber : filters.PageNumber;
+      filters.PageSize = filters.PageSize == 0 ? _paginationOptions.DefaultPageSize : filters.PageSize;
+
+      var posts = _unitOfWork.PostRepository.GetAll();
+
+      if (filters.UserId != null)
+      {
+        posts = posts.Where(x => x.UserId == filters.UserId);
+      }
+
+      if (filters.Date != null)
+      {
+        posts = posts.Where(x => x.Date.ToShortDateString() == filters.Date?.ToShortDateString());
+      }
+
+      if (filters.Description != null)
+      {
+        posts = posts.Where(x => x.Description.ToLower().Contains(filters.Description.ToLower()));
+      }
+
+      var pagedPosts = PagedList<Post>.Create(posts, filters.PageNumber, filters.PageSize);
+
+      return pagedPosts;
+      //return _unitOfWork.PostRepository.GetAll();
     }
 
     public async Task InsertPost(Post post)

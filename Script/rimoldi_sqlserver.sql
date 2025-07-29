@@ -521,7 +521,7 @@ SET IDENTITY INSERT [dbo].[martillero] OFF
 --
 -- Indices de la tabla comercial
 --
-ALTER TABLE comercial
+ALTER TABLE [dbo].[comercial]
   ADD PRIMARY KEY (idComercial,idPropiedad),
   ADD KEY fk_Comercial_Propiedad1 (idPropiedad);
 GO

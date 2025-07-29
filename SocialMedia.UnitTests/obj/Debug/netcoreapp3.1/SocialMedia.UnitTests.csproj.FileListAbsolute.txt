@@ -92,7 +92,8 @@ C:\Users\LIF-02\Documents\Abel\SocialMedia\SocialMedia.UnitTests\obj\Debug\netco
 C:\Users\LIF-02\Documents\Abel\SocialMedia\SocialMedia.UnitTests\obj\Debug\netcoreapp3.1\SocialMedia.UnitTests.AssemblyInfoInputs.cache
 C:\Users\LIF-02\Documents\Abel\SocialMedia\SocialMedia.UnitTests\obj\Debug\netcoreapp3.1\SocialMedia.UnitTests.AssemblyInfo.cs
 C:\Users\LIF-02\Documents\Abel\SocialMedia\SocialMedia.UnitTests\obj\Debug\netcoreapp3.1\SocialMedia.UnitTests.csproj.CoreCompileInputs.cache
-C:\Users\LIF-02\Documents\Abel\SocialMedia\SocialMedia.UnitTests\obj\Debug\netcoreapp3.1\SocialMedia.UnitTests.csproj.CopyComplete
 C:\Users\LIF-02\Documents\Abel\SocialMedia\SocialMedia.UnitTests\obj\Debug\netcoreapp3.1\SocialMedia.UnitTests.dll
 C:\Users\LIF-02\Documents\Abel\SocialMedia\SocialMedia.UnitTests\obj\Debug\netcoreapp3.1\SocialMedia.UnitTests.pdb
 C:\Users\LIF-02\Documents\Abel\SocialMedia\SocialMedia.UnitTests\obj\Debug\netcoreapp3.1\SocialMedia.UnitTests.genruntimeconfig.cache
+C:\Users\LIF-02\Documents\Abel\SocialMedia\SocialMedia.UnitTests\obj\Debug\netcoreapp3.1\SocialMedia.UnitTests.sourcelink.json
+C:\Users\LIF-02\Documents\Abel\SocialMedia\SocialMedia.UnitTests\obj\Debug\netcoreapp3.1\SocialMe.8BA0764C.Up2Date
